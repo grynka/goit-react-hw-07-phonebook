@@ -31,7 +31,7 @@ const ContactList = () => {
       {isLoading && <p>Loading contacts...</p>}
       {error && <p>{error}</p>}
       <ul>{filteredContacts.length > 0 && filteredContacts.map(({ id, name, phone }) => <li key={id}><MdAccountCircle />{name}, {phone}{' '}
-      <Button onClick={() => deleteContactId(id)}>delete</Button>
+      <Button onClick={() => deleteContactId(id)}></Button>
       </li>
       )}</ul>
     </div>
