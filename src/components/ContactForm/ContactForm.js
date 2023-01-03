@@ -1,7 +1,6 @@
 import { Label, Input, Forms, Button } from './ContactForm.styled';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addContact } from 'redux/contactsSlise';
 
 export default function ContactForm() {
   const [name, setName] = useState('');
@@ -27,7 +26,6 @@ export default function ContactForm() {
 
   const handleContactsCreate = event => {
     event.preventDefault();
-    dispatch(addContact(name, number));
     setName('');
     setNumber('');
   };

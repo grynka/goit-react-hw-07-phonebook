@@ -1,33 +1,37 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { Button } from './ContactList.styled';
 import { useSelector, useDispatch } from 'react-redux';
 import { getContacts, getFilter } from 'redux/selectors';
+import { fetchContacts } from 'redux/operation'
+import { getError, getIsLoading } from 'redux/selectors';
 import { deleteContact } from 'redux/contactsSlise';
 
+
 const ContactList = () => {
-  const contacts = useSelector(getContacts);
-  const filter = useSelector(getFilter).toLowerCase();
-  console.log(filter);
-  const filteredContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(filter)
-  );
   const dispatch = useDispatch();
+  const isLoading = useSelector(getIsLoading);
+  const error = useSelector(getError);
+  const items = useSelector(getContacts);
+  console.log(isLoading)
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   const deleteContactId = contactId => {
     dispatch(deleteContact(contactId));
   };
 
-  return (
-    <ul>
-      {filteredContacts.map(({ id, name, number }) => (
-        <li key={id}>
-          <p>
-            {name}: {number}{' '}
-            <Button onClick={() => deleteContactId(id)}>delete</Button>
-          </p>
-        </li>
-      ))}
-    </ul>
+ return (
+      <div>
+      {isLoading && <p>Loading contactss...</p>}
+      {error && <p>{error}</p>}
+      <ul>{items.length > 0 && items.map(({ id, name, phone }) => <li key={id}><p>{name}, {phone}{''}
+      <Button onClick={() => deleteContactId(id)}>delete</Button>
+      </p>
+      </li>
+      )}</ul>
+    </div>
   );
 };
 
