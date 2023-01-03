@@ -1,12 +1,16 @@
 import { Label, Input, Forms, Button } from './ContactForm.styled';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/operation';
+import { getContacts } from 'redux/selectors';
 
 export default function ContactForm() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const dispatch = useDispatch();
+  const items = useSelector(getContacts);
+  const contactsName = items.map(contact => contact.name);
+        
 
   const handleChange = event => {
     switch (event.currentTarget.name) {
@@ -25,6 +29,11 @@ export default function ContactForm() {
 
   const handleContactsCreate = event => {
     event.preventDefault();
+    if (contactsName.includes(name)) {
+     alert("данный контакт уже существует")
+      return
+    }
+    else 
     dispatch(addContact({name, phone}))
     setName('');
     setPhone('');

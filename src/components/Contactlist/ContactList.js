@@ -12,8 +12,9 @@ const ContactList = () => {
   const isLoading = useSelector(getIsLoading);
   const error = useSelector(getError);
   const items = useSelector(getContacts);
-  
-  console.log()
+  const filter = useSelector(getFilter).toLowerCase();
+  const filteredContacts = items.filter(item =>
+    item.name.toLowerCase().includes(filter))
 
   useEffect(() => {
     dispatch(fetchContacts());
@@ -27,7 +28,7 @@ const ContactList = () => {
       <div>
       {isLoading && <p>Loading contacts...</p>}
       {error && <p>{error}</p>}
-      <ul>{items.length > 0 && items.map(({ id, name, phone }) => <li key={id}><p>{name}, {phone}{' '}
+      <ul>{filteredContacts.length > 0 && filteredContacts.map(({ id, name, phone }) => <li key={id}><p>{name}, {phone}{' '}
       <Button onClick={() => deleteContactId(id)}>delete</Button>
       </p>
       </li>
