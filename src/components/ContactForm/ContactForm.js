@@ -10,7 +10,6 @@ export default function ContactForm() {
   const dispatch = useDispatch();
   const items = useSelector(getContacts);
   const contactsName = items.map(contact => contact.name);
-        
 
   const handleChange = event => {
     switch (event.currentTarget.name) {
@@ -25,16 +24,14 @@ export default function ContactForm() {
       default:
         return;
     }
- };
+  };
 
   const handleContactsCreate = event => {
     event.preventDefault();
     if (contactsName.includes(name)) {
-     alert("данный контакт уже существует")
-      return
-    }
-    else 
-    dispatch(addContact({name, phone}))
+      alert('данный контакт уже существует');
+      return;
+    } else dispatch(addContact({ name, phone }));
     setName('');
     setPhone('');
   };
